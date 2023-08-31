@@ -26,28 +26,31 @@ Pendientes:
 #----------------------------------------------------------------------------------------------
                 
 def fechaValida(num1,num2,num3):
-    if num3 <= 2023 and num3 > 0:
-        if num2 == 1 or num2 == 3 or num2 == 5 or num2 == 7 or num2 == 8 or num2 == 10 and num2 == 12:
-            if num1 <= 31 and num1 >= 0:
-                return True
-            else:
-                return False
-        if num2 == 4 or num2 == 6 or num2 == 9 or num2 == 11:
-            if num1 <= 30 and num1 >= 0:
-                return True
-            else:
-                return False
-        if num2 == 2:
-            if num3 % 4 == 0:
-                if num1 <= 29 and num1 >= 0:
+    if num3 % 4 == 0 and num3 % 100 != 0 or num3 % 400 == 0:
+        if num3 <= 2023 and num3 > 0:
+            if num2 == 1 or num2 == 3 or num2 == 5 or num2 == 7 or num2 == 8 or num2 == 10 and num2 == 12:
+                if num1 <= 31 and num1 >= 0:
                     return True
                 else:
                     return False
-            else:
-                if num1 <= 28 and num1 >= 0:
+            if num2 == 4 or num2 == 6 or num2 == 9 or num2 == 11:
+                if num1 <= 30 and num1 >= 0:
                     return True
                 else:
                     return False
+            if num2 == 2:
+                if num3 % 4 == 0:
+                    if num1 <= 29 and num1 >= 0:
+                        return True
+                    else:
+                        return False
+                else:
+                    if num1 <= 28 and num1 >= 0:
+                        return True
+                    else:
+                        return False
+        else:
+            return False
     else:
         return False
     
