@@ -34,25 +34,21 @@ def extraerSubcadenaRebanada(cadena, posicion):
     print(cadena[posicion:])
 
 def extraerSubcadena(cadena, posicion):
-    contador = 0
     aumento = 0
     lista = []
     aux = []
-    if contador >= 0 and contador < 3:
-        for valores in range(0,len(cadena)):
-            contador += 1
-            lista.append(cadena[valores])
-        contador = 0
+    for valores in range(0,len(cadena)):
+        lista.append(cadena[valores])
         
-        for i in range(len(lista)):
-            if i >= posicion:
-                aux.append(lista[i])
+    for i in range(len(lista)):
+        if i >= posicion:
+            aux.append(lista[i])
         
-        longitud = len(aux)
+    longitud = len(aux)
 
-        print("Sin utilizar rebanadas -->","Posicion:",posicion, "Caracteres:",longitud)
-        for elementos in aux:
-            print(elementos,end="")
+    print("Sin utilizar rebanadas -->","Posicion:",posicion, "Caracteres:",longitud)
+    for elementos in aux:
+        print(elementos,end="")
 
 #----------------------------------------------------------------------------------------------
 # CUERPO PRINCIPAL

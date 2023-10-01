@@ -26,17 +26,13 @@ Pendientes:
 # FUNCIONES
 #----------------------------------------------------------------------------------------------
 def vocalesMayusculas(cadena):
-    contador = 0
     vocales = ["a","e","i","o","u"]
     mayuscula = ""
     lista = []
     listaNueva = []
     
-    if contador >= 0 and contador < 3:
-        for valores in range(0,len(cadena)):
-            contador += 1
-            lista.append(cadena[valores])
-        contador = 0
+    for valores in range(0,len(cadena)):
+        lista.append(cadena[valores])
     
     for letras in range(len(lista)):
         if lista[letras] in vocales:

@@ -27,13 +27,10 @@ Pendientes:
 def fraseOrdenada(cadena):
     lista = []
     aux = []
-    contador = 0
     aumento = 0
-    if contador >= 0 and contador < 3:
-        for valores in range(0,len(cadena)):
-            contador += 1
-            lista.append(cadena[valores])
-        contador = 0
+    
+    for valores in range(0,len(cadena)):
+        lista.append(cadena[valores])
         
     lista.sort()
     

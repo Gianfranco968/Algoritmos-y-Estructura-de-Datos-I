@@ -32,28 +32,24 @@ def eliminarSubcadenaRebanada(cadena, posicion):
     print(cadena[0:posicion])
 
 def eliminarSubcadena(cadena, posicion):
-    contador = 0
     aumento = 0
     lista = []
     aux = []
     eliminado = []
-    if contador >= 0 and contador < 3:
-        for valores in range(0,len(cadena)):
-            contador += 1
-            lista.append(cadena[valores])
-        contador = 0
+    for valores in range(0,len(cadena)):
+        lista.append(cadena[valores])
         
-        for i in range(len(lista)):
-            if i < posicion:
-                aux.append(lista[i])
-            elif i >= posicion:
-                eliminado.append(lista[i])
+    for i in range(len(lista)):
+        if i < posicion:
+            aux.append(lista[i])
+        elif i >= posicion:
+            eliminado.append(lista[i])
         
-        longitud = len(eliminado)
+    longitud = len(eliminado)
 
-        print("Sin utilizar rebanadas -->","Posicion:",posicion, "Caracteres:",longitud)
-        for elementos in aux:
-            print(elementos,end="")
+    print("Sin utilizar rebanadas -->","Posicion:",posicion, "Caracteres:",longitud)
+    for elementos in aux:
+        print(elementos,end="")
 
 
 #----------------------------------------------------------------------------------------------
