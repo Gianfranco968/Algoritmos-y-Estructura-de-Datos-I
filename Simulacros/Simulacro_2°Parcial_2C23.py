@@ -1,7 +1,7 @@
 """
 -----------------------------------------------------------------------------------------------
-Título: SIMULACRO - 2DO PARCIAL 2023
-Fecha: 16/11/23
+Título: SIMULACRO 2DO PARCIAL - 2C23
+Fecha: 29/11/23
 Autor: Gianfranco Mazzei
 Descripción: PDF
 -----------------------------------------------------------------------------------------------
@@ -22,29 +22,28 @@ def agregarAmigoAlSorteo(path):
     ## Esta función permite agregar un amigo al archivo
     ## (el string a almacenar debe quedar así "nombre;apellido;dni;num1;num2;num3;num4;num5;num6")
     cadenaCaracter = ""
-    nombre = ""
-    dni = 0
     contador = 0
-    amigos = open(path, mode="a", encoding="utf-8")
-    nombre = input("Introducir el nombre del nuevo usuario: ").upper()
-    apellido = input("Introducir el apellido del nuevo usuario: ").upper()
     
-    while True:
-        try:
-            dni = int(input("Introducir el DNI: "))
-            break
-        except ValueError:
-            print("El DNI debe ser ENTERO")
-            
-    cadenaCaracter = nombre + ";" + apellido + ";" + str(dni)
+    usuario = input("Dime el nombre de tu amigo... ")
+    apellido = input("Dime su apellido... ")
+    digitos = validarEntero("Dime su DNI... ","El valor no es un entero!")
+    
+    cadenaCaracter = usuario + ";" + apellido + ";" + str(digitos) + ";"
     
     while contador < 6:
-        numero = validarEntero("Introducir un número ENTERO: ","El número debe ser ENTERO")
-        cadenaCaracter = cadenaCaracter + ";" + str(numero)
-        contador += 1
+        digitos = validarEntero("Dime el número elegido... ","El valor no es un entero!")
+        if contador < 5:
+            cadenaCaracter += str(digitos) + ";"
+            contador += 1
+        else:
+            cadenaCaracter += str(digitos)
+            contador += 1
+            
+    archivo = open(path, mode="a", encoding="utf-8")
     
-    amigos.write(cadenaCaracter + "\n")
-    amigos.close()
+    archivo.write(cadenaCaracter)
+    
+    archivo.close()
 
 
 def validarEntero(mensajePedido, mensajeError):
@@ -53,56 +52,54 @@ def validarEntero(mensajePedido, mensajeError):
     ## para validar que los valores ingresados (dni y numeros elegidos en el primer caso y monto en el segundo) sean enteros
     ## utilizar un manejador de excepciones 
     ## No es necesario validar que el número jugado esté entre 0 y 90, asumiremos que el usuario siempre ingresa correctamente esos números
-    try:
-        numero = int(input(mensajePedido))
-        return numero
-    except ValueError:
-        print(mensajeError)
-        
+    while True:
+        try:
+            digitos = int(input(mensajePedido))
+            return digitos
+        except ValueError:
+            print(mensajeError)
+    
 
 def realizarSorteo(path):
     ## Desarrolla aquí el código ##
+    contador = 0
     numerosSorteados = []
     listaGanadores = []
-    contador = 0
-    numerosSorteados = sortearNumeros()
-    amigos = open(path, mode="r", encoding="utf-8")
+    listaAleatorios = sortearNumeros()
+    numerosSorteados = listaAleatorios
     
-    for linea in amigos:
+    archivo = open(path, mode="r", encoding="utf-8")
+    
+    for linea in archivo:
         campos = linea.replace("\n","").split(";")
-        for datos in range(3,9):
-            for numerosSalidos in range(0,6):
-                if int(campos[datos]) == numerosSorteados[numerosSalidos]:
-                    contador += 1
+        
+        for indice in range(3,len(campos)):
+            if int(campos[indice]) in numerosSorteados:
+                contador += 1
+                
         if contador >= 2:
-            ganador = campos[0] + " " + campos[1]
-            listaGanadores.append(ganador)
+            cadena = campos[0] + " " + campos[1]
+            listaGanadores.append(cadena)
+            
         contador = 0
-    amigos.close()
     
     return numerosSorteados, listaGanadores
-    
-
+        
+        
 def sortearNumeros():
     ## Desarrolla aquí el código ##
     ## Esta función crea una lista de 6 números aleatorios distintos
-    numerosSorteados = []
     contador = 0
-    cantidad = 0
-    while cantidad < 6:
+    aux = 0
+    listaAleatorios = []
+    
+    while contador < 6:
         aleatorio = random.randint(0,90)
-        contador = 1
-        for numeros in range(len(numerosSorteados)):
-            if contador != 2:
-                if numerosSorteados[numeros] != aleatorio:
-                    contador = 1
-                else:
-                    contador = 2
-        if contador == 1:
-            numerosSorteados.append(aleatorio)
-            cantidad += 1
-            contador = 0
-    return numerosSorteados
+        if aleatorio not in listaAleatorios:
+            listaAleatorios.append(aleatorio)
+            contador += 1
+        
+    return listaAleatorios
 
 
 def repartirPozo(listaGanadores):
@@ -110,16 +107,16 @@ def repartirPozo(listaGanadores):
     ## Utilizar un manejador de excepciones si el pozo es vacante
     mensajePedido = "Ingrese un monto total de apuestas válido: "
     mensajeError = "El monto no es un número, intente de nuevo."
-    monto = validarEntero(mensajePedido, mensajeError)
-    cantidadGanadores = len(listaGanadores)
-
+    monto = validarEntero("Ingrese un monto total de apuestas válido: ", "Error, introducir un valor válido!")
     try:
-       division = monto / cantidadGanadores
-       for ganadores in range(len(listaGanadores)):
-           print(listaGanadores[ganadores],"ganó $",division)
+        if len(listaGanadores) == 0:
+            print("Pozo Vacante!")
+            
+        for cantidad in range(len(listaGanadores)):
+            divisionMonto = monto / len(listaGanadores)
+            print(listaGanadores[cantidad] + "ganó $ " + str(divisionMonto))
     except ZeroDivisionError:
-        print("Pozo vacante")
-        
+        print("Pozo Vacante!")
 
 #----------------------------------------------------------------------------------------------
 # CUERPO PRINCIPAL
@@ -129,7 +126,7 @@ def repartirPozo(listaGanadores):
 
 numerosSorteados = []
 listaGanadores = []
-path = "C:/Users/Gian/Desktop/amigos.txt" # IMPORTANTE!!!!! usa esta variable string para el path completo del archivo amigos.txt
+path = "C:/Users/gianf/Desktop/amigos.txt" # IMPORTANTE!!!!! usa esta variable string para el path completo del archivo amigos.txt
 
 # Bloque de menú
 #----------------------------------------------------------------------------------------------
