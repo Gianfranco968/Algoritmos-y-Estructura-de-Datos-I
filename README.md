@@ -1,2 +1,6 @@
-# Algoritmos-y-Programacion-I
-Ejercicios de la guia y parciales de la materia Algoritmos y Programación I
+# Algoritmos-y-Estructura-de-Datos-I
+Index:
+- Ejercicios
+- Ejemplos
+- Simulacros
+- Parciales
